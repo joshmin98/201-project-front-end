@@ -1,0 +1,15 @@
+import GoogleLogin from 'react-google-login';
+import Typist from 'react-typist';
+import React, { Component } from 'react';
+
+export default class Login extends Component {
+  successLogin(resp) {
+    console.log(resp);
+  }
+
+  failLogin(resp) {
+    alert('Error', resp);
+  }
+
+
+};

@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Main from './Components/Main.jsx';
-import GoogleLogin from 'react-google-login';
+import Main from './Components/Main';
+import Login from './Components/Login';
+import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <GoogleLogin
-          buttonText="Login"
-        />
+let App = () => (
+  <div className="App">
+    <Router>
+      <div>
+        <ul>
+          <li>
+            <Link to="/autoarkaive">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/">Login</Link>
+          </li>
+        </ul>
+
+        <Route exact path="/" component={Login}/>
+        <Route path="/autoarkaive" component={Main}/>
       </div>
-    );
-  }
-}
+    </Router>
+  </div>
+);
 
 export default App;
