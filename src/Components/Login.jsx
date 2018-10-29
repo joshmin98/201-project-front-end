@@ -18,6 +18,7 @@ export default class Login extends Component {
         <Typist>
           <Typist.Delay ms={1000}/>
           <span>Arkaive</span>
+
           <Typist.Backspace count={7} delay={500}/>
           <span>AutoArkaive</span>
         </Typist>
