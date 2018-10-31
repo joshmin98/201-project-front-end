@@ -5,10 +5,21 @@ import Login from './Components/Login';
 import './App.css';
 import Test from './Test.jsx';
 
-let App = () => (
-  <div className="App">
-    <Test loggedIn={true}/>
-  </div>
-);
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-export default App;
+  componentWillMount() {
+    
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Test loggedIn={false}/>
+      </div>
+    );
+  }
+};
