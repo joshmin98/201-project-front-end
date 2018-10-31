@@ -17,7 +17,7 @@ export default class App extends Component {
   }
 
   handleLogin(googleResp) {
-    axios.get('/TESTTTTTT', {
+    axios.get('http://localhost:9000/', {
       params: {
         email: googleResp.w3.U3
       }
@@ -33,7 +33,7 @@ export default class App extends Component {
           <div>
             <ul>
               <li>
-                <Link to="/autoarkaive">Home</Link>
+                <Link to="/autoarkaive">Classes</Link>
               </li>
               <li>
                 <Link to="/about">About</Link>
@@ -45,11 +45,11 @@ export default class App extends Component {
 
             <Route
               exact path="/"
-              component={Login}
+              render={(props) => <Login test={this.handleLogin.bind(this)} {...props}/>}
             />
             <Route
               path="/autoarkaive"
-              render={(props) => <Login test={this.handleLogin.bind(this)} {...props}/>}
+              component={Main}
             />
             <Route
               path="/about"

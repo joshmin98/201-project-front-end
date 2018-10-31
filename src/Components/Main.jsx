@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      data: []
+      classes: []
     };
   }
 
   componentWillMount() {
     // Call out to API here
-    this.setState({name: 'Josh'});
-    let data = [
-      {
-        class: 'CSCI201',
-        time: '9:00AM',
-        location: 'SAL 109',
-        code: 'KR21K'
+    axios.get('http://localhost:9000/user').then(
+      (resp) => {
+        console.log(resp.data);
+        this.setState(resp.data);
       }
-    ];
-    this.setState({data: data});
+    );
+    // this.setState({name: 'Josh'});
+    // let data = [
+    //   {
+    //     class: 'CSCI201',
+    //     time: '9:00AM',
+    //     location: 'SAL 109',
+    //     code: 'KR21K'
+    //   }
+    // ];
+    // this.setState({ data: data });
   }
 
   render() {
@@ -36,7 +43,7 @@ export default class Main extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.data.map((event, idx) => (
+            {this.state.classes.map((event, idx) => (
               <tr key={idx}>
                 <th scope="row">{event.class}</th>
                 <td>{event.location}</td>

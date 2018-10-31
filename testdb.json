@@ -1,0 +1,19 @@
+{
+  "user": {
+    "name": "Josh",
+    "classes": [
+      {
+	"class": "CSCI201",
+	"time": "9:00AM",
+	"location": "SAL109",
+	"code": "KR21K"
+      },
+      {
+	"class": "CSCI201",
+	"time": "9:00AM",
+	"location": "SAL109",
+	"code": "KR21K"
+      }
+    ]
+  }
+}
