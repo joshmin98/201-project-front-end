@@ -4,21 +4,26 @@ import Main from './Components/Main';
 import Login from './Components/Login';
 import './App.css';
 import Test from './Test.jsx';
+import axios from 'axios';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loggedIn: false
+    };
   }
 
   componentWillMount() {
-    
+    axios.get().then(resp => {
+      
+    });
   }
 
   render() {
     return (
       <div className="App">
-        <Test loggedIn={false}/>
+        <Test loggedIn={true}/>
       </div>
     );
   }

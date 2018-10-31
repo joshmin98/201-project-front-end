@@ -1,11 +1,21 @@
 import GoogleLogin from 'react-google-login';
 import Typist from 'react-typist';
 import React, { Component } from 'react';
+import axios from 'axios';
 import './Login.css';
 
 export default class Login extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   successLogin(resp) {
     console.log(resp);
+    axios.get('/', {
+      params: {
+        
+      }
+    });
   }
 
   failLogin(resp) {
