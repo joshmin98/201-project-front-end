@@ -10,7 +10,6 @@ export default class Login extends Component {
   }
 
   successLogin(resp) {
-    console.log(resp);
     axios.get('/', {
       params: {
         
@@ -35,7 +34,7 @@ export default class Login extends Component {
         <GoogleLogin
           buttonText="Login"
           clientId="317302246616-hflle8oaqav6fl3ldl1asl8e2m2deket.apps.googleusercontent.com"
-          onSuccess={this.successLogin}
+          onSuccess={(resp) => this.props.test(resp)}
           onFailure={this.failLogin}
         />
       </div>
