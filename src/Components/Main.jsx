@@ -10,23 +10,12 @@ export default class Main extends Component {
   }
 
   componentWillMount() {
-    // Call out to API here
-    axios.get('http://localhost:9000/user').then(
+    axios.get('http://localhost:9000/endPointThatIHit').then(
       (resp) => {
         console.log(resp.data);
         this.setState(resp.data);
       }
     );
-    // this.setState({name: 'Josh'});
-    // let data = [
-    //   {
-    //     class: 'CSCI201',
-    //     time: '9:00AM',
-    //     location: 'SAL 109',
-    //     code: 'KR21K'
-    //   }
-    // ];
-    // this.setState({ data: data });
   }
 
   render() {

@@ -19,73 +19,85 @@ export default class App extends Component {
   handleLogin(googleResp) {
     axios.get('http://localhost:9000/', {
       params: {
+        command: "checkUser",
         email: googleResp.w3.U3
       }
-    }).then(
-      this.setState({ loggedIn: true })
-    );
+    }).then((resp) => {
+      if(!resp.arkaiveAccountExists) {
+        // register here
+      }
+      else {
+        this.setState({ loggedIn: true });
+      }
+      this.setState({ loggedIn: true });
+    });
   }
 
   render() {
     if(this.state.loggedIn) {
       return (
-        <Router>
-          <div>
-            <ul>
-              <li>
-                <Link to="/autoarkaive">Classes</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/">Login</Link>
-              </li>
-            </ul>
+        <div>
+          <Router>
+            <div>
+              <nav>
+                <li>
+                  <Link to="/autoarkaive">Classes</Link>
+                </li>
+                <li>
+                  <Link to="/about">About</Link>
+                </li>
+                <li>
+                  <Link to="/">Login</Link>
+                </li>
+              </nav>
 
-            <Route
-              exact path="/"
-              render={(props) => <Login test={this.handleLogin.bind(this)} {...props}/>}
-            />
-            <Route
-              path="/autoarkaive"
-              component={Main}
-            />
-            <Route
-              path="/about"
-              component={About}
-            />
-          </div>
-        </Router>
+              <Route
+                exact path="/"
+                render={(props) => <Login test={this.handleLogin.bind(this)} {...props}/>}
+              />
+              <Route
+                path="/autoarkaive"
+                component={Main}
+              />
+              <Route
+                path="/about"
+                component={About}
+              />
+            </div>
+          </Router>
+        </div>
       );
     }
     else {
       return (
-        <Router>
-          <div>
-            <ul>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/">Login</Link>
-              </li>
-            </ul>
+        <div>
+          <Router>
+            <div>
+              <nav>
+                <li>
+                  <Link to="/about">About</Link>
+                </li>
+                <li>
+                  <Link to="/">Login</Link>
+                </li>
+              </nav>
 
-            <Route
-              exact path="/"
-              render={(props) => <Login test={this.handleLogin.bind(this)} {...props}/>}
-            />
-            <Route
-              path="/autoarkaive"
-              component={Main}
-            />
-            <Route
-              path="/about"
-              component={About}
-            />
-          </div>
-        </Router>
+              <Route
+                exact path="/"
+                render={(props) => <Login test={this.handleLogin.bind(this)} {...props}/>}
+              />
+              <Route
+                path="/autoarkaive"
+                component={Main}
+              />
+              <Route
+                path="/about"
+                component={About}
+              />
+            </div>
+          </Router>
+
+        </div>
       );
     }
   }

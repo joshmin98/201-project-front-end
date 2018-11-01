@@ -2,19 +2,22 @@ import GoogleLogin from 'react-google-login';
 import Typist from 'react-typist';
 import React, { Component } from 'react';
 import axios from 'axios';
+
 import './Login.css';
 
 export default class Login extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   successLogin(resp) {
+    // If return false display register arkaive form
     axios.get('/', {
       params: {
-        
+        command: 'checkUser',
+        email: resp.data.email
       }
-    });
+    }).error(axios.get('/', {
+      params: {
+        command: 'addUser'
+      }
+    }));
   }
 
   failLogin(resp) {
@@ -25,10 +28,9 @@ export default class Login extends Component {
     return (
       <div id="login">
         <Typist>
-          <Typist.Delay ms={1000}/>
+          <Typist.Delay ms={1500}/>
           <span>Arkaive</span>
-
-          <Typist.Backspace count={7} delay={500}/>
+          <Typist.Backspace count={7} delay={2000}/>
           <span>AutoArkaive</span>
         </Typist>
         <GoogleLogin
