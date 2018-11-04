@@ -5,6 +5,7 @@ import axios from 'axios';
 import Main from './Components/Main';
 import Login from './Components/Login';
 import About from './Components/About';
+import Sidebar from './Components/Sidebar';
 
 import './App.css';
 
@@ -35,21 +36,18 @@ export default class App extends Component {
 
   render() {
     if(this.state.loggedIn) {
+      let links = [
+        <Link to="/autoarkaive">Classes</Link>,
+        <Link to="/about">About</Link>,
+        <Link to="/">Login</Link>
+      ];
+
       return (
         <div>
           <Router>
             <div>
-              <nav>
-                <li>
-                  <Link to="/autoarkaive">Classes</Link>
-                </li>
-                <li>
-                  <Link to="/about">About</Link>
-                </li>
-                <li>
-                  <Link to="/">Login</Link>
-                </li>
-              </nav>
+
+          <Sidebar links={links} shown={false}/>
 
               <Route
                 exact path="/"
@@ -63,24 +61,25 @@ export default class App extends Component {
                 path="/about"
                 component={About}
               />
+
             </div>
           </Router>
         </div>
       );
     }
     else {
+      let links = [
+        <Link to="/about">About</Link>,
+        <Link to="/">Login</Link>
+      ];
+
       return (
         <div>
+
           <Router>
             <div>
-              <nav>
-                <li>
-                  <Link to="/about">About</Link>
-                </li>
-                <li>
-                  <Link to="/">Login</Link>
-                </li>
-              </nav>
+
+              <Sidebar links={links} shown={false}/>
 
               <Route
                 exact path="/"

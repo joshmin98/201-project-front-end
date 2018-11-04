@@ -1,0 +1,19 @@
+import React from 'react';
+
+export default props => {
+  if(props.shown) {
+    return(
+      <nav>
+        {props.links.map((link, idx) => (
+          <li key={idx}>
+            {link}
+          </li>
+        ))}
+      </nav>
+    );
+  }
+  else {
+    return(
+    );
+  }
+}
