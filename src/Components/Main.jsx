@@ -28,7 +28,6 @@ export default class Main extends Component {
   render() {
     return (
       <div className="container">
-
         <h1>Hi {this.state.name}, we got you for:</h1>
         <table className="table">
           <thead className="thead-dark">
