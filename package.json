@@ -29,6 +29,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "mirage-server": "^0.1.0"
+    "mirage-server": "^0.1.0",
+    "react-test-renderer": "^16.6.0"
   }
 }

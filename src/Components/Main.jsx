@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+
+import Modal from '../Modal';
+
 export default class Main extends Component {
   constructor(props) {
     super(props);
@@ -18,9 +21,14 @@ export default class Main extends Component {
     );
   }
 
+  handleClick() {
+    this.props.toggleModal();
+  }
+
   render() {
     return (
       <div className="container">
+
         <h1>Hi {this.state.name}, we got you for:</h1>
         <table className="table">
           <thead className="thead-dark">
@@ -42,7 +50,9 @@ export default class Main extends Component {
             ))}
           </tbody>
         </table>
+
         
+        <i id="add" className="fas fa-plus" onClick={this.handleClick.bind(this)}/>
       </div>
     );
   }

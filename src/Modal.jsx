@@ -1,53 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default props => {
+export default class Modal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      shown: this.props.shown
+    };
+  }
 
-  const overlayStyle = {
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    height: '100%',
-    width: '100%',
-    zIndex: 1000,
-    backgroundColor: 'rgba(0,0,0,0.65)'
-  };
+  handleClick() {
+    this.props.toggleModal();
+  }
 
-  const contentStyle = {
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 10000,
-    overflow: 'auto',
-    textAlign: 'center',
-    padding: '4px',
-    cursor: 'pointer'
-  };
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.shown !== this.props.shown) {
+      this.setState({ shown: this.props.shown });
+    }
+  }
 
-  const dialogStyle = {
-    position: 'relative',
-    outline: 0,
-    width: 'auto',
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    boxSizing: 'border-box',
-    maxWidth: 'auto',
-    cursor: 'default',
-    borderRadius: '4px'
-  };
-
-  return(
-    <div>
-      <div className="modal-overlay-div" style={overlayStyle}/>
-      <div className="modal-content-div" style={contentStyle}>
-        <div className="modal-dialog-div" style={dialogStyle}>
-          {this.props.children}
+  render() {
+    if(this.state.shown) {
+      return(
+        <div>
+          <div id="backdrop" onClick={this.handleClick.bind(this)}/>
+          <div id="modal">
+            {this.props.children}
+          </div>
         </div>
-      </div>
-    </div>
-  );
-
+      );
+    }
+    else {
+      return(
+        null
+      );
+    }
+  }
 }
