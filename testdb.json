@@ -15,5 +15,11 @@
 	"code": "KR21K"
       }
     ]
+  },
+  "login": {
+    "arkaiveAccountExists": "true"
+  },
+  "arkaivelogin": {
+    "isValidArkaiveAccount": "true"
   }
 }

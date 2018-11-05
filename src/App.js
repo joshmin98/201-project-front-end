@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
+import GoogleMapReact from 'google-map-react';
 
 import Main from './Components/Main';
 import Login from './Components/Login';
@@ -17,23 +18,43 @@ export default class App extends Component {
       loggedIn: false,
       modalShown: false
     };
- }
+  }
+
+  handleForm(event) {
+    event.preventDefault();
+    axios.get('http://localhost:9000/', {
+      params: 'check'
+    });
+  }
 
   handleLogin(googleResp) {
-    axios.get('http://localhost:9000/', {
+    axios.get('http://localhost:9000/login', {
       params: {
         command: "checkUser",
         email: googleResp.w3.U3
       }
-    }).then((resp) => {
+    }).then(resp => {
+      resp = resp.data;
       if(!resp.arkaiveAccountExists) {
-        // register here
-        this.setState({ loggedIn: true });
+        this.setState({ loggedIn: false });
+        // open modal here
+        axios.get("localhost:9000/arkaivelogin", {
+          params: {
+            //username and password
+            command: "addUser"
+          }
+        }).then(resp => {
+          if(resp.isValidArkaiveAccount) {
+            return;
+          }
+          else {
+            alert('Arkaive account invalid!');
+          }
+        });
       }
       else {
         this.setState({ loggedIn: true });
       }
-      this.setState({ loggedIn: true });
     });
   }
 
@@ -54,11 +75,16 @@ export default class App extends Component {
           <Router>
             <div>
 
-              <Modal shown={this.state.modalShown} toggleModal={this.toggleModal.bind(this)}>
-                class form here
+              <Modal shown={this.state.modalShown}
+                     toggleModal={this.toggleModal.bind(this)}>
+                <GoogleMapReact
+                  bootstrapURLKeys={{ key: ''}}
+                >
+                </GoogleMapReact>
               </Modal>
 
-              <Sidebar links={links} shown={this.state.modalShown}/>
+              <Sidebar links={links}
+                       shown={this.state.modalShown}/>
 
               <Route
                 exact path="/"
@@ -90,8 +116,18 @@ export default class App extends Component {
           <Router>
             <div>
 
-              <Modal shown={this.state.modalShown} toggleModal={this.toggleModal.bind(this)}>
-                sign up form here
+              <Modal
+                shown={this.state.modalShown}
+                toggleModal={this.toggleModal.bind(this)}>
+                <form onSubmit={this.handleForm.bind(this)}>
+                  <label>Arkaive Username</label>
+                  <input type="text"></input>
+                  <br/>
+                  <label>Arkaive Password</label>
+                  <input type="text"></input>
+                  <br/>
+                  <button type="submit">Submit</button>
+                </form>
               </Modal>
 
 

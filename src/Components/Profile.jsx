@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default (props) => {
+export default props => {
   return(
     <div className="container">
       <h3>{props.name}</h3>
