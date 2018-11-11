@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Modal from '../Modal';
-
 export default class Main extends Component {
   constructor(props) {
     super(props);
@@ -12,13 +10,17 @@ export default class Main extends Component {
     };
   }
 
-  componentWillMount() {
+  fetchAutoArkaiveClasses() {
     axios.get('http://localhost:9000/endPointThatIHit').then(
       (resp) => {
         console.log(resp.data);
         this.setState(resp.data);
       }
     );
+  }
+
+  componentWillMount() {
+    this.fetchAutoArkaiveClasses();
   }
 
   handleClick() {
@@ -28,7 +30,6 @@ export default class Main extends Component {
   render() {
     return (
       <div className="container">
-
         <h1>Hi {this.state.name}, we got you for:</h1>
         <table className="table">
           <thead className="thead-dark">

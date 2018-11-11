@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
-import GoogleMapReact from 'google-map-react';
 
 import Main from './Components/Main';
 import Login from './Components/Login';
@@ -16,44 +15,106 @@ export default class App extends Component {
     super(props);
     this.state = {
       loggedIn: false,
-      modalShown: false
+      modalShown: false,
+      classList: [],
+      email: '',
+      arkaiveUsername: '',
+      arkaivePassword: '',
+      classToAdd: ''
     };
   }
 
-  handleForm(event) {
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  fetchClasses() {
+    axios.get('http://localhost:9000/fetchClasses', {
+      params: {
+        command: 'fetchClasses',
+        email: this.state.email
+      }
+    }).then(resp => {
+      console.log(resp.data);
+      this.setState({ classList: resp.data.classes });
+    }).error((error) => {
+      console.log(error);
+    });
+  }
+
+  handleArkaiveLogin(event) {
     event.preventDefault();
-    axios.get('http://localhost:9000/', {
-      params: 'check'
+    console.log(event);
+    axios.get("http://localhost:9000/arkaiveLogin", {
+      params: {
+        command: "addUser",
+        username: this.state.arkaiveUsername,
+        password: this.state.arkaivePassword
+      }
+    }).then(resp => {
+      resp = resp.data;
+      console.log(resp);
+      if(resp.isValidArkaiveAccount) {
+        this.setState({ modalShown: false });
+        this.setState({ loggedIn: true });
+        this.fetchClasses();
+      }
+      else {
+        alert('Arkaive account invalid!');
+      }
+    });
+  }
+
+  handleForm(event) {
+    const fields = Array.prototype.slice.call(event.target)
+          .filter(el => el.name)
+          .reduce((form, el) => ({
+            ...form,
+            [el.name]: el.value
+          }), {});
+    let classStr = fields.class.split(' ');
+    const className = classStr[0];
+    const courseCode = classStr[2];
+    event.preventDefault();
+    axios.get('http://localhost:9000/addClass', {
+      params: {
+        command: 'addClass',
+        email: this.state.email,
+        picurl: '',
+        arkaive_username: this.state.arkaiveUsername,
+        arkaive_password: this.state.arkaivePassword,
+        className: className,
+        courseCode: courseCode
+      }
+    }).then(resp => {
+      resp = resp.data;
+      if(resp.successfullyAdded) {
+        alert(resp.message);
+        this.fetchClasses();
+      }
+      else {
+        alert('Unable to add class!');
+      }
     });
   }
 
   handleLogin(googleResp) {
+    this.setState({ email: googleResp.w3.U3 });
     axios.get('http://localhost:9000/login', {
       params: {
         command: "checkUser",
-        email: googleResp.w3.U3
+        email: this.state.email
       }
     }).then(resp => {
       resp = resp.data;
+      console.log(resp);
       if(!resp.arkaiveAccountExists) {
         this.setState({ loggedIn: false });
-        // open modal here
-        axios.get("localhost:9000/arkaivelogin", {
-          params: {
-            //username and password
-            command: "addUser"
-          }
-        }).then(resp => {
-          if(resp.isValidArkaiveAccount) {
-            return;
-          }
-          else {
-            alert('Arkaive account invalid!');
-          }
-        });
+        this.setState({ modalShown: true });
       }
       else {
         this.setState({ loggedIn: true });
+        this.fetchClasses();
       }
     });
   }
@@ -74,13 +135,20 @@ export default class App extends Component {
         <div>
           <Router>
             <div>
-
-              <Modal shown={this.state.modalShown}
-                     toggleModal={this.toggleModal.bind(this)}>
-                <GoogleMapReact
-                  bootstrapURLKeys={{ key: ''}}
-                >
-                </GoogleMapReact>
+              <Modal
+                shown={this.state.modalShown}
+                toggleModal={this.toggleModal.bind(this)}
+              >
+                <form onSubmit={this.handleForm.bind(this)}>
+                  <label>Classes</label>
+                  <br></br>
+                  <select name='class'>
+                    {this.state.classList.map((arkaiveClass, idx) => (
+                      <option key={idx}>{arkaiveClass.class} - {arkaiveClass.courseCode}</option>
+                    ))}
+                  </select>
+                  <button type='submit'>Add Class</button>
+                </form>
               </Modal>
 
               <Sidebar links={links}
@@ -119,12 +187,22 @@ export default class App extends Component {
               <Modal
                 shown={this.state.modalShown}
                 toggleModal={this.toggleModal.bind(this)}>
-                <form onSubmit={this.handleForm.bind(this)}>
+                <form onSubmit={this.handleArkaiveLogin.bind(this)}>
                   <label>Arkaive Username</label>
-                  <input type="text"></input>
+                  <input
+                    type='text'
+                    name='arkaiveUsername'
+                    value={this.state.arkaiveUsername}
+                    onChange={this.onChange}
+                  />
                   <br/>
                   <label>Arkaive Password</label>
-                  <input type="text"></input>
+                  <input
+                    type='text'
+                    name='arkaivePassword'
+                    value={this.state.arkaivePassword}
+                    onChange={this.onChange}
+                  />
                   <br/>
                   <button type="submit">Submit</button>
                 </form>
@@ -137,10 +215,7 @@ export default class App extends Component {
                 exact path="/"
                 render={props => <Login handleLogin={this.handleLogin.bind(this)} {...props}/>}
               />
-              <Route
-                path="/autoarkaive"
-                render={props => <Main toggleModal={this.toggleModal.bind(this)} {...props}/>}
-              />
+
               <Route
                 path="/about"
                 component={About}

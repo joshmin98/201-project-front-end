@@ -13,13 +13,35 @@
 	"time": "9:00AM",
 	"location": "SAL109",
 	"code": "KR21K"
+      },
+      {
+	"class": "CSCI201",
+	"time": "9:00AM",
+	"location": "SAL109",
+	"code": "KR21K"
       }
     ]
   },
   "login": {
-    "arkaiveAccountExists": "true"
+    "arkaiveAccountExists": false
   },
   "arkaivelogin": {
-    "isValidArkaiveAccount": "true"
+    "isValidArkaiveAccount": true
+  },
+  "addClass": {
+    "successfullyAdded": true,
+    "message": "Added class: CSCI201"
+  },
+  "fetchClasses": {
+    "classes": [
+      {
+	"class": "CSCI201",
+	"courseCode": "KR21K"
+      },
+      {
+	"class": "CSCI201",
+	"courseCode": "KR21K"
+      }
+    ]
   }
 }

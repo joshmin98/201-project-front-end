@@ -1,7 +1,6 @@
 import GoogleLogin from 'react-google-login';
 import Typist from 'react-typist';
 import React, { Component } from 'react';
-import axios from 'axios';
 
 import './Login.css';
 
