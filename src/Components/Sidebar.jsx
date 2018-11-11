@@ -17,9 +17,9 @@ export default class Sidebar extends Component {
         <div>
           <nav>
             {this.props.links.map((link, idx) => (
-              <li key={idx}>
+              <ul key={idx}>
                 {link}
-              </li>
+              </ul>
             ))}
           </nav>
           <div id="backdrop" onClick={this.handleClick.bind(this)}/>
