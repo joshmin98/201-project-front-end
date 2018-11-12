@@ -42,6 +42,10 @@ i {
     cursor: pointer;
 }
 
+form {
+    z-index: 10000;
+}
+
 #modal {
     position: fixed;
     background-color: #fff;

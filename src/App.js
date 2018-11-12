@@ -140,13 +140,16 @@ export default class App extends Component {
                 toggleModal={this.toggleModal.bind(this)}
               >
                 <form onSubmit={this.handleForm.bind(this)}>
-                  <label>Classes</label>
-                  <br></br>
-                  <select name='class'>
-                    {this.state.classList.map((arkaiveClass, idx) => (
-                      <option key={idx}>{arkaiveClass.class} - {arkaiveClass.courseCode}</option>
-                    ))}
-                  </select>
+                  <div>
+                    <label>Classes</label>
+                    <select name='class' className='form-control'>
+                      {this.state.classList.map((arkaiveClass, idx) => (
+                        <option key={idx}>{arkaiveClass.class} - {arkaiveClass.courseCode}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                  </div>
                   <button type='submit'>Add Class</button>
                 </form>
               </Modal>
@@ -188,22 +191,24 @@ export default class App extends Component {
                 shown={this.state.modalShown}
                 toggleModal={this.toggleModal.bind(this)}>
                 <form onSubmit={this.handleArkaiveLogin.bind(this)}>
-                  <label>Arkaive Username</label>
-                  <input
-                    type='text'
-                    name='arkaiveUsername'
-                    value={this.state.arkaiveUsername}
-                    onChange={this.onChange}
-                  />
-                  <br/>
-                  <label>Arkaive Password</label>
-                  <input
-                    type='text'
-                    name='arkaivePassword'
-                    value={this.state.arkaivePassword}
-                    onChange={this.onChange}
-                  />
-                  <br/>
+                  <div className='form-group'>
+                    <label>Arkaive Username</label>
+                    <input
+                      type='text'
+                      name='arkaiveUsername'
+                      value={this.state.arkaiveUsername}
+                      onChange={this.onChange}
+                    />
+                  </div>
+                  <div className='form-group'>
+                    <label>Arkaive Password</label>
+                    <input
+                      type='text'
+                      name='arkaivePassword'
+                      value={this.state.arkaivePassword}
+                      onChange={this.onChange}
+                    />
+                  </div>
                   <button type="submit">Submit</button>
                 </form>
               </Modal>

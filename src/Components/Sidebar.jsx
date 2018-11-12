@@ -7,6 +7,7 @@ export default class Sidebar extends Component {
       shown: props.shown
     };
   }
+
   handleClick() {
     this.setState({ shown: !this.state.shown });
   }
