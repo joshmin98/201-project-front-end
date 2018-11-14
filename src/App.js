@@ -29,7 +29,7 @@ export default class App extends Component {
   }
 
   fetchClasses() {
-    axios.get('http://localhost:9000/fetchClasses', {
+    axios.get('http://localhost:9999/fetchClasses', {
       params: {
         command: 'fetchClasses',
         email: this.state.email
@@ -45,7 +45,7 @@ export default class App extends Component {
   handleArkaiveLogin(event) {
     event.preventDefault();
     console.log(event);
-    axios.get("http://localhost:9000/arkaiveLogin", {
+    axios.get("http://localhost:9999/arkaiveLogin", {
       params: {
         command: "addUser",
         username: this.state.arkaiveUsername,
@@ -75,16 +75,24 @@ export default class App extends Component {
     let classStr = fields.class.split(' ');
     const className = classStr[0];
     const courseCode = classStr[2];
+    const address = fields.address;
+    const startTime = fields.startTime;
+    const endTime = fields.endTime;
     event.preventDefault();
-    axios.get('http://localhost:9000/addClass', {
+    axios.get('http://localhost:9999/addClass', {
       params: {
         command: 'addClass',
         email: this.state.email,
         picurl: '',
         arkaive_username: this.state.arkaiveUsername,
         arkaive_password: this.state.arkaivePassword,
-        className: className,
-        courseCode: courseCode
+        myClass: className,
+        courseCode: courseCode,
+        latitude: '',
+        longitude: '',
+        altitude: '',
+        startTime: startTime,
+        endTime: endTime
       }
     }).then(resp => {
       resp = resp.data;
@@ -100,7 +108,7 @@ export default class App extends Component {
 
   handleLogin(googleResp) {
     this.setState({ email: googleResp.w3.U3 });
-    axios.get('http://localhost:9000/login', {
+    axios.get('http://localhost:9999/login', {
       params: {
         command: "checkUser",
         email: this.state.email
@@ -149,14 +157,20 @@ export default class App extends Component {
                     </select>
                   </div>
                   <div>
+                    <label>Check-In Start Time</label>
+                    <input name='startTime' type='time'/>
+                    <label>Check-In End Time</label>
+                    <input name='endTime' type='time'/>
+                  </div>
+                  <div>
+                    <label>Address</label>
+                    <input name='address' type='text'/>
                   </div>
                   <button type='submit'>Add Class</button>
                 </form>
               </Modal>
-
               <Sidebar links={links}
                        shown={this.state.modalShown}/>
-
               <Route
                 exact path="/"
                 render={props => <Login handleLogin={this.handleLogin.bind(this)} {...props}/>}
@@ -169,7 +183,6 @@ export default class App extends Component {
                 path="/about"
                 component={About}
               />
-
             </div>
           </Router>
         </div>
@@ -183,10 +196,8 @@ export default class App extends Component {
 
       return (
         <div>
-
           <Router>
             <div>
-
               <Modal
                 shown={this.state.modalShown}
                 toggleModal={this.toggleModal.bind(this)}>
@@ -212,7 +223,6 @@ export default class App extends Component {
                   <button type="submit">Submit</button>
                 </form>
               </Modal>
-
 
               <Sidebar links={links} shown={false}/>
 

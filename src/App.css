@@ -9,6 +9,16 @@ nav {
     width: 15vw;
     float: left;
     background-color: black;
+    -webkit-animation: fadein 0.5s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 0.5s; /* Firefox < 16 */
+        -ms-animation: fadein 0.5s; /* Internet Explorer */
+         -o-animation: fadein 0.5s; /* Opera < 12.1 */
+            animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 nav li {
@@ -30,7 +40,7 @@ nav li a:hover {
 
 #backdrop {
     position: fixed;
-    z-index: 999;
+    z-index: 500;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0,0,0,0.5);
@@ -43,21 +53,20 @@ i {
 }
 
 form {
-    z-index: 10000;
+    padding: 10px;
+    padding-left: 0;
 }
 
 #modal {
     position: fixed;
     background-color: #fff;
     border-radius: 3px;
-    z-index: 1;
-    top: 50%;
-    left: 50%;
-}
-
-form {
+    z-index: 1000;
+    top: 20%;
+    left: 35%;
     padding: 10px;
 }
+
 
 input {
     padding-top: 5px;

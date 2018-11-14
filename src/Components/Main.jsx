@@ -11,8 +11,8 @@ export default class Main extends Component {
   }
 
   fetchAutoArkaiveClasses() {
-    axios.get('http://localhost:9000/endPointThatIHit').then(
-      (resp) => {
+    axios.get('http://localhost:9999/endPointThatIHit').then(
+      resp => {
         console.log(resp.data);
         this.setState(resp.data);
       }
